@@ -1,15 +1,22 @@
 //алгорит выполнения 1) задания а именно мы включаем показ модального окна и его закрываем
 const modals = () => {
    //!создаем функцию которая будет привязыватьься к модальному окну привязка к кнопке
-   function bindModal(triggerSelector, modalSelector, closeSelector) {
+   function bindModal(
+      triggerSelector,
+      modalSelector,
+      closeSelector,
+      closeClickOverlay = true // для того чтобы контролировать какое окно необходимо закрывать а какое нет
+   ) {
       //это сделано для птимизации то есть мы просто будем передавать селекторы а они будут искаться уже в самой функции
       const trigger = document.querySelectorAll(triggerSelector), // тут мы берем все элементы на случай если у насбудет несколько селекторов открываться
          modal = document.querySelector(modalSelector),
-         close = document.querySelector(closeSelector)
+         close = document.querySelector(closeSelector),
+         windows = document.querySelectorAll('[data-modal]')
 
       //trigger - это сама кнопка
       //modal - это само окно которое может быть открытым
       //close - крестик по закрытию окна
+      //windows - для того чтобы получать всемодальные окна с data-атрибутом
 
       //?реализуем появление модального окна (тут проходимся по всем селекторам на случчай если у нас их будет много)
       trigger.forEach(item => {
@@ -17,6 +24,11 @@ const modals = () => {
             if (e.target) {
                e.preventDefault()
             }
+            //реализация закрыавем все окна модальные если они у нас были открыты
+            windows.forEach(item => {
+               item.style.display = 'none'
+            })
+
             modal.style.display = 'block' // меняем стиль css для того чтобы модальное окна стало видимым
             //todo     document.body.style.overflow = 'hidden' // для того чтобы нескролилось содержимое сайта когда открыто модальное окно
             document.body.classList.add('modal-open') // это второй вариант как можно работать с классами то функционалу будет тоже самое
@@ -33,7 +45,11 @@ const modals = () => {
       //?реализуем закрытие окна при клике вне его по черному фону
       modal.addEventListener('click', e => {
          //этой проверкой мы подключаем  клик по черному фрну нашего моадльного кона
-         if (e.target === modal) {
+         if (e.target === modal && closeClickOverlay) {
+            //реализация закрыавем все окна модальные если они у нас были открыты
+            windows.forEach(item => {
+               item.style.display = 'none'
+            })
             modal.style.display = 'none' // делаем закрытие модального окна при клике на крестик
             //todo   document.body.style.overflow = '' //возвращаем свойство для того чтобы скролл работал после закрытия модального окна
             document.body.classList.remove('modal-open') // это второй вариант как можно работать с классами то функционалу будет тоже самое
@@ -65,6 +81,27 @@ const modals = () => {
    /*==================вызываем модальное окно с задержкой в 60сек==========*/
    // showModalByTime('.popup', 60000)
    /*==================END -вызываем модальное окно с задержкой в 60сек==========*/
+
+   /*=================Модальное окно калькулятор=================*/
+   bindModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close')
+   /*=================END-модальное окно калькулятор=================*/
+
+   /*=================Модальное окно для появления следующего модального окна калькулятора=================*/
+   bindModal(
+      '.popup_calc_button',
+      '.popup_calc_profile',
+      '.popup_calc_profile_close',
+      false
+   )
+   /*=================END-Модальное окно для появления следующего модального окна калькулятора=================*/
+   /*=================Модальное окно для появления второго с параметрами модального окна калькулятора=================*/
+   bindModal(
+      '.popup_calc_profile_button',
+      '.popup_calc_end',
+      '.popup_calc_end_close',
+      false
+   )
+   /*=================END-Модальное окно для появления следующего модального окна калькулятора=================*/
 }
 
 export default modals

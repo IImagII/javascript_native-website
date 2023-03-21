@@ -1,5 +1,11 @@
 //пишем модуль по созданию табов на сайте
-const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
+const tabs = (
+   headerSelector,
+   tabSelector,
+   contentSelector,
+   activeClass,
+   display = 'block' // для более универсальности чтобы подходили все block, inline и т.д
+) => {
    //тут получаем наши селекторы коотрыми будем управлять
    const header = document.querySelector(headerSelector), // селектор родительского тега где находяться все табы
       tab = document.querySelectorAll(tabSelector), // конкретно самы табы их класс
@@ -21,7 +27,7 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
    //функция показа табов
    function showTabContent(arg = 0) {
       //тут передаем конкретный arg чтобы показывать именно его
-      content[arg].style.display = 'block'
+      content[arg].style.display = display
 
       //тут мы добавляем  активный класс конкретному таб
       tab[arg].classList.add(activeClass)
