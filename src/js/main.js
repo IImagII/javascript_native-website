@@ -4,6 +4,7 @@ import tabs from './modules/tabs' // создание табов
 import forms from './modules/forms' // модуль с формамми
 import changeModalState from './modules/changeModalState' // для сбора данных при наборе калькуляторе
 import timer from './modules/timerData'
+import imagesData from './modules/imagesData'
 
 //обработчиккотры будет обрабатывать наши скрипты только тогда когда у нас будет готова структура проэкта
 // тут будет весь функционал
@@ -43,4 +44,6 @@ window.addEventListener('DOMContentLoaded', () => {
    forms(modalState) // запускаем форму передаем туда параметры для подсчета калькулятора modalState
 
    timer('.container1', deadline) //заупскаем таймер
+
+   imagesData() // подключили при клике на изображение увеличивается картинка
 })
