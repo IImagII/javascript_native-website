@@ -11,7 +11,8 @@ const modals = () => {
       const trigger = document.querySelectorAll(triggerSelector), // тут мы берем все элементы на случай если у насбудет несколько селекторов открываться
          modal = document.querySelector(modalSelector),
          close = document.querySelector(closeSelector),
-         windows = document.querySelectorAll('[data-modal]')
+         windows = document.querySelectorAll('[data-modal]'),
+         scroll = calcScroll()
 
       //trigger - это сама кнопка
       //modal - это само окно которое может быть открытым
@@ -32,6 +33,7 @@ const modals = () => {
             modal.style.display = 'block' // меняем стиль css для того чтобы модальное окна стало видимым
             //todo     document.body.style.overflow = 'hidden' // для того чтобы нескролилось содержимое сайта когда открыто модальное окно
             document.body.classList.add('modal-open') // это второй вариант как можно работать с классами то функционалу будет тоже самое
+            document.body.style.style.marginRight = `${scroll}px` // добавляем тот отсутп из за которого у нас прыгает наш сайт при появлении модального окна
          })
       })
 
@@ -40,6 +42,7 @@ const modals = () => {
          modal.style.display = 'none' // делаем закрытие модального окна при клике на крестик
          //todo     document.body.style.overflow = '' //возвращаем свойство для того чтобы скролл работал после закрытия модального окна
          document.body.classList.remove('modal-open') // это второй вариант как можно работать с классами то функционалу будет тоже самое
+         document.body.style.style.marginRight = `0px` //уберает наш отсуп когда окно закроется чтобы опять не прыгало
       })
 
       //?реализуем закрытие окна при клике вне его по черному фону
@@ -53,6 +56,7 @@ const modals = () => {
             modal.style.display = 'none' // делаем закрытие модального окна при клике на крестик
             //todo   document.body.style.overflow = '' //возвращаем свойство для того чтобы скролл работал после закрытия модального окна
             document.body.classList.remove('modal-open') // это второй вариант как можно работать с классами то функционалу будет тоже самое
+            document.body.style.style.marginRight = `0px` //уберает наш отсуп когда окно закроется чтобы опять не прыгало
          }
       })
    }
@@ -64,6 +68,28 @@ const modals = () => {
          document.querySelector(selector).style.display = 'block' // тут мы вешаемся на то модальное окно которое должно показываться
          document.body.style.overflow = 'hidden'
       }, time)
+   }
+
+   //функция которая вычисляет отступ для того чтобы сайт не прыгал когда появляется модальное окно
+   function calcScroll() {
+      //сначало создадим некий элемент
+      let div = document.createElement('div')
+      div.style.width = '50px'
+      div.style.height = '50px'
+      div.style.overflowY = 'scroll'
+      div.style.visibility = 'hidden'
+
+      //показывапем элемент настранице
+      document.body.appendChild(div)
+
+      //вычисляем размер прокрутки
+      let scrollWidth = div.offsetWidth - div.clientWidth //тут мы получм саму прокрутку
+      //div.offsetWidth - это полная величина
+      //div.clientWidth - а тут включается только прокрутка
+
+      div.remove() // удаляем элемент так как он выполнял временную функцию для того чтобы вычислить значение а потом нам он больше не нужен
+
+      return scrollWidth
    }
 
    /*==================вызываем первое модальное окно==========*/

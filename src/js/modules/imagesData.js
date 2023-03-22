@@ -23,7 +23,7 @@ const imagesData = () => {
       if (target && target.classList.contains('preview')) {
          //показываем наше окно
          imgPopup.style.display = 'flex'
-         //     body.style.overflow = 'hidden'
+         document.body.style.overflow = 'hidden'
 
          //мы получаем то изображенеи которое у нас хнариться (большое изображение)
          const path = target.parentNode.getAttribute('href')
@@ -35,6 +35,7 @@ const imagesData = () => {
       //методом matches() - мы ищем совпадение то есть в нашем случае мы проверяем что пользователь кликнул именно на наш popup
       if (target && target.matches('div.popup')) {
          imgPopup.style.display = 'none'
+         document.body.style.overflow = 'scroll'
       }
    })
 }
