@@ -18,7 +18,7 @@ const forms = state => {
    //!второй вариант с переиспользуемой функцией
    checkNumberInputs('input[name="user_phone"]')
 
-   //сообщения которые бьудут выводиться для пользователя
+   // сообщения которые бьудут выводиться для пользователя
    const message = {
       loading: 'Загрузка...',
       success: 'Спасибо! С вами связуться',
@@ -50,6 +50,13 @@ const forms = state => {
 
          //собираем все данные с форм
          const formData = new FormData(item) // этот обьект найдет все input и поместит в специальную структуру
+
+         //дефолтныен значения
+         formData.append('form', '0')
+         formData.append('width', '0')
+         formData.append('height', '0')
+         formData.append('type', 'tree')
+         formData.append('profile', 'Холодное')
 
          //тут проверяем что если у нас именно последня форма то будем выполнять следующее
          if (item.getAttribute('data-calc') === 'end') {

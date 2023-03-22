@@ -4,8 +4,8 @@ const gulp = require('gulp')
 const webpack = require('webpack-stream')
 const browsersync = require('browser-sync')
 
-// const dist = "./dist/";
-const dist = 'D:/Open Server 5.2.9/OSPanel/domains/form'
+const dist = './dist/'
+// const dist = 'D:/Open Server 5.2.9/OSPanel/domains/form'
 
 gulp.task('copy-html', () => {
    return gulp
