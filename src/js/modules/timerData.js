@@ -40,6 +40,8 @@ const timer = (id, deadline) => {
          seconds = timer.querySelector('#seconds'),
          timeInterval = setInterval(updateClock, 1000) // это переменная длятого чтобы останавливать таймер
 
+      updateClock() //вызываем еще до того как она заупститься при помощи setInterval()
+
       //функция коотрая считает сколько времени осталось до deadline
       function updateClock() {
          const t = getTimeRemaning(endTime)
